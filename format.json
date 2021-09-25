@@ -1,0 +1,28 @@
+{
+    "Sunday": {
+        "events": [
+            {
+                "name": "",
+                "description": "",
+                "start time": "",
+                "end time": "",
+                "actual start time": "",
+                "actual end time": "",
+                "late": false
+            }
+        ]
+    },
+    "Monday": {
+        "events": [
+            {
+                "name": "",
+                "description": "",
+                "start time": "",
+                "end time": "",
+                "actual start time": "",
+                "actual end time": "",
+                "late": false
+            }
+        ]
+    }
+}
