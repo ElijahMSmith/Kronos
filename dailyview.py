@@ -1,58 +1,98 @@
 from tkinter import *
 from Event import *
-from util import constants
+import util as constants
 from tkinter.font import Font
+from eventview import *
 
 startHour = 0
 startMinute = 0
 
-canvWidth = constants["canvWidth"]
-canvHeight = constants["canvHeight"]
-cellWidth = constants["cellWidth"]
+canvWidth = constants.canvWidth
+canvHeight = constants.canvHeight
+cellWidth = constants.cellWidth
+eventBg = constants.eventBg
+taskBg = constants.taskBg
+lateBg = constants.lateBg
 cellYOffset = 50
 
 rowEvents = [[]]
 
+canvasFrame = None
+canvas = None
 
-# Used to write text inside each cell and not expand beyond
+updateEventCallback = None
+deleteEventCallback = None
 
-def make_label(master, x, y, h, w, fs, *args, **kwargs):
-    buttonText = Font(frame, size=fs)
-    f = Frame(master, height=h, width=w)
-    f.pack_propagate(0)  # don't shrink
-    f.place(x=x, y=y)
-    label = Label(f, *args, **kwargs)
-    label.pack(fill=BOTH, expand=1)
-    return label
+popup = None
 
 
-def renderCalendar(outerFrame, scheduledData, canvStartHour):
+def createEventPopup(forEvent):
+    global popup
+    if not(popup is None) and not (popup.win is None):
+        popup.win.destroy()
+    popup = PopupWindow(forEvent, updateEventCallback, deleteEventCallback)
+
+
+# Get click position and determine which event is being clicked on
+def clickCallback(clickOrigin):
+    clickx = clickOrigin.x
+    clicky = clickOrigin.y
+    for row in rowEvents:
+        for renderAttr in row:
+            x0 = renderAttr[0]
+            y0 = renderAttr[1]
+            x1 = renderAttr[2]
+            y1 = renderAttr[3]
+            event = renderAttr[4]
+
+            if clickx >= x0 and clickx <= x1 and clicky >= y0 and clicky <= y1:
+                createEventPopup(event)
+                return
+
+
+# Change cursor when it's over an event
+def mouseMoved(mouseOrigin):
+    mousex = mouseOrigin.x
+    mousey = mouseOrigin.y
+    for row in rowEvents:
+        for renderAttr in row:
+            x0 = renderAttr[0]
+            y0 = renderAttr[1]
+            x1 = renderAttr[2]
+            y1 = renderAttr[3]
+            event = renderAttr[4]
+
+            # checks whether the mouse is inside the boundrys
+            if x0 <= mousex and x1 >= mousex and y0 <= mousey and y1 >= mousey:
+                canvas.config(cursor="hand1")
+                return
+
+    canvas.config(cursor="")
+
+
+def renderCalendar(outerFrame, scheduledData, canvStartHour, callbacks):
+    global canvasFrame, canvas, updateEventCallback, deleteEventCallback
+    canvasFrame = outerFrame
+    updateEventCallback = callbacks[0]
+    deleteEventCallback = callbacks[1]
+
     canvas = Canvas(outerFrame, bg="white", height=canvHeight, width=canvWidth,
                     bd=5)
+    canvas.bind("<Button-1>", clickCallback)
+    canvas.bind("<Motion>", mouseMoved)
     canvas.pack()
     renderEvents(canvas, scheduledData, canvStartHour)
-
-
-'''
-Get click position, which may or may not be on top of an event
-def key(event):
-    print "pressed", repr(event.char)
-
-def callback(event):
-    print "clicked at", event.x, event.y
-
-canvas= Canvas(root, width=100, height=100)
-canvas.bind("<Key>", key)
-canvas.bind("<Button-1>", callback)
-canvas.pack()
-'''
+    print("Finished canvas render")
 
 
 def renderEvents(canvas, scheduledData, canvStartHour):
+    global rowEvents
+    eventLabelFS = 15
     timeLabels = Font(canvas, size=10)
-    rowEvents = [[]]
+    eventLabels = Font(canvas, size=eventLabelFS)
+    eventLabelCharWidth = eventLabels.measure("m")
 
-    # somewidget.winfo_width()
+    rowEvents = [[]]
 
     # Draw lines to mark specific hours, based on what the current range is
     # Also put labels for the hours at the top
@@ -84,8 +124,6 @@ def renderEvents(canvas, scheduledData, canvStartHour):
             if end.hour + end.minute/60.0 < canvStartHour or start.hour + start.minute/60.0 > canvStartHour + canvWidth/cellWidth:
                 continue
 
-            # print(event)
-
             ix = start.hour - canvStartHour
 
             x0 = ix * cellWidth + start.minute/60 * cellWidth
@@ -101,5 +139,34 @@ def renderEvents(canvas, scheduledData, canvStartHour):
                 rowEvents.append([])
             rowEvents[index].append(attr)
 
+            fillColor = eventBg
+            if event.eventType == "task":
+                fillColor = taskBg
+
+            if event.late:
+                fillColor = lateBg
+
             canvas.create_rectangle(
-                attr[0], attr[1], attr[2], attr[3], fill="red")
+                attr[0], attr[1], attr[2], attr[3], fill=fillColor)
+
+            # Create each line on the event individually until we can't safely create a new line of text
+            i = 0
+            lineNum = 0
+            lineWidth = x1 - x0
+            charsPerLine = int(lineWidth/eventLabelCharWidth)
+
+            while i < len(event.name):
+                lineText = event.name[i:i + charsPerLine].strip()
+                xStart = x0 + 20
+                yStart = y0 + 20 + eventLabelFS * lineNum + 5 * lineNum
+
+                # If we've reached the last possible line, don't render any more text
+                if yStart + eventLabelFS > y1 - 20:
+                    break
+
+                canvas.create_text(xStart,
+                                   yStart, fill="white",
+                                   text=lineText,
+                                   font=eventLabels, anchor=NW),
+                i += charsPerLine
+                lineNum += 1

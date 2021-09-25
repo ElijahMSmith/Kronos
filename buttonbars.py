@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter.font import Font
+from Event import *
 
 
 def renderTopBar(frame, createNewEvent, syncWithCalendar):

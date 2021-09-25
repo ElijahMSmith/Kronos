@@ -1,0 +1,2 @@
+- Render event text into the block on the left side
+- Change color of event depending on event type and lateness
