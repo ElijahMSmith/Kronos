@@ -7,6 +7,8 @@ from eventview import *
 startHour = 0
 startMinute = 0
 
+currentDate = None
+
 canvWidth = constants.canvWidth
 canvHeight = constants.canvHeight
 cellWidth = constants.cellWidth
@@ -30,7 +32,8 @@ def createEventPopup(forEvent):
     global popup
     if not(popup is None) and not (popup.win is None):
         popup.win.destroy()
-    popup = PopupWindow(forEvent, updateEventCallback, deleteEventCallback)
+    popup = PopupWindow(currentDate, forEvent,
+                        updateEventCallback, deleteEventCallback)
 
 
 # Get click position and determine which event is being clicked on
@@ -70,11 +73,12 @@ def mouseMoved(mouseOrigin):
     canvas.config(cursor="")
 
 
-def renderCalendar(outerFrame, scheduledData, canvStartHour, callbacks):
-    global canvasFrame, canvas, updateEventCallback, deleteEventCallback
+def renderCalendar(outerFrame, currDate, scheduledData, canvStartHour, callbacks):
+    global canvasFrame, canvas, updateEventCallback, deleteEventCallback, currentDate
     canvasFrame = outerFrame
     updateEventCallback = callbacks[0]
     deleteEventCallback = callbacks[1]
+    currentDate = currDate
 
     canvas = Canvas(outerFrame, bg="white", height=canvHeight, width=canvWidth,
                     bd=5)

@@ -1,2 +1,6 @@
 - When calendar updates, save to file
     - One file, keep the JSON format
+
+
+
+- When the currentDate changes by left/right buttons on dashboard, the eventData array needs to be swapped 
