@@ -3,28 +3,29 @@ from util import getTimeString
 
 class Event:
     def __init__(self, name, description, start="12:00 AM", end="12:01 AM", actualStart=None, actualEnd=None, eventType="event"):
-        print(start, end, actualStart, actualEnd)
         self.name = name
         self.description = description
-        self.eventType = eventType
+        etLower = eventType.lower()
+        if not (etLower == "event" or etLower == "task"):
+            etLower = "event"
+        self.eventType = etLower
 
         self.start = EventTime(start) if isinstance(start, str) else start
         self.end = EventTime(end) if isinstance(end, str) else end
 
-        if actualStart is None:
+        if actualStart is None or (isinstance(actualStart, str) and actualStart == ""):
             self.actualStart = self.start
         else:
             self.actualStart = EventTime(
                 actualStart) if isinstance(actualStart, str) else actualStart
 
-        if actualEnd is None:
+        if actualEnd is None or (isinstance(actualEnd, str) and actualEnd == ""):
             self.actualEnd = self.end
         else:
             self.actualEnd = EventTime(actualEnd) if isinstance(
                 actualEnd, str) else actualEnd
 
         self.late = self.actualStart > self.start
-        print(self)
 
     def fullyEqual(self, other):
         return self.name == other.name and self.description == other.description and self.start == other.start and self.end == other.end and self.actualStart == other.actualStart and self.actualEnd == other.actualEnd and self.eventType == other.eventType

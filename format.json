@@ -1,7 +1,8 @@
 {
-    "Sunday": {
+    "09-24-2021": {
         "events": [
             {
+                "uuid": "",
                 "name": "",
                 "description": "",
                 "type": "",
@@ -13,9 +14,10 @@
             }
         ]
     },
-    "Monday": {
+    "09-25-2021": {
         "events": [
             {
+                "uuid": "",
                 "name": "",
                 "description": "",
                 "type": "",

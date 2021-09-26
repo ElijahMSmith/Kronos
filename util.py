@@ -1,3 +1,10 @@
+import datetime
+
+
+def toDateString(dt):
+    return dt.strftime("%m/%d/%Y")
+
+
 def getTimeString(hour, minute):
     if hour < 12:
         if hour == 0:

@@ -2,8 +2,9 @@ from tkinter import *
 from buttonbars import *
 from Event import *
 from datetime import date
-import util as constants
+import util as utils
 from dailyview import renderCalendar
+import datetime
 
 buttonbar = None
 dailyView = None
@@ -13,6 +14,9 @@ weeklyView = None
 # Accepted times: 12:00 AM - 11:59 PM
 # Holds the raw events
 eventData = []
+
+# Get date string: utils.toDateString(currentDate)
+currentDate = datetime.datetime.today()
 
 # Holds the events with the rows they're going to be displayed on
 scheduledData = [[]]
@@ -32,9 +36,9 @@ eventData.append(Event(
 eventData.append(Event("Hang out with Shelly", "Still haven't decided where we're going",
                        "7:00 PM", "11:59 PM", actualStart="8:00PM", actualEnd="11:59 PM", eventType="task"))
 
-canvWidth = constants.canvWidth
-canvHeight = constants.canvHeight
-cellWidth = constants.cellWidth
+canvWidth = utils.canvWidth
+canvHeight = utils.canvHeight
+cellWidth = utils.cellWidth
 
 canvStartHour = 0
 
@@ -53,6 +57,18 @@ def decStart():
         return
     canvStartHour -= 1
     rerenderCanvas()
+
+
+def incDate():
+    global currentDate
+    currentDate += datetime.timedelta(days=1)
+    rerenderTopBar()
+
+
+def decDate():
+    global currentDate
+    currentDate -= datetime.timedelta(days=1)
+    rerenderTopBar()
 
 
 def updateEvent(previousVersion, newVersion):
@@ -106,12 +122,24 @@ def scheduleEvents():
         scheduledData[index].append(singleEvent)
 
 
-def newEvent():
-    return
+def addNewEvent(event):
+    eventData.append(event)
+    scheduleEvents()
+    rerenderCanvas()
 
 
 def syncCalendar():
     return
+
+
+def rerenderTopBar():
+    for child in topButtonBar.winfo_children():
+        child.destroy()
+    topButtonBar.pack(fill=X)
+    renderTopBar(topButtonBar, currentDate,
+                 (addNewEvent, syncCalendar, incDate, decDate))
+    # rerenderCanvas()
+    print("re-rendered top bar")
 
 
 def rerenderCanvas():
@@ -131,8 +159,8 @@ window.configure(bg="white")
 window.winfo_toplevel().title("Visualize Your Day")
 
 topButtonBar = Frame(window, bd=5, bg="white")
-topButtonBar.pack()
-renderTopBar(topButtonBar, newEvent, syncCalendar)
+topButtonBar.pack(fill=X)
+rerenderTopBar()
 
 dailyView = Frame(window)
 dailyView.pack()

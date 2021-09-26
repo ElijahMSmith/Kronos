@@ -1,2 +1,2 @@
-- Render event text into the block on the left side
-- Change color of event depending on event type and lateness
+- When calendar updates, save to file
+    - One file, keep the JSON format

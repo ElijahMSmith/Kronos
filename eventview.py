@@ -12,10 +12,10 @@ class PopupWindow():
     def __init__(self, event, updateEventCallback, deleteEventCallback):
         self.previousEvent = event.__copy__()
         self.event = event
+        self.invalidFields = False
         self.updateEventCallback = updateEventCallback
         self.deleteEventCallback = deleteEventCallback
         self.rows = 0
-        # text = entryValues["whatever"].get()
         self.entryValues = {}
         self.createWindow()
 
@@ -41,6 +41,7 @@ class PopupWindow():
         self.createDataRow(
             "actualEnd", "Time at Which Item Actually Ended: ", 50)
 
+        self.actionBarFrame = Frame(self.win, bg=eventViewBg)
         self.renderActionBar()
 
     def createDataRow(self, propertyName, labelText, entryWidth, enabled=True):
@@ -62,7 +63,10 @@ class PopupWindow():
         self.rows += 1
 
     def renderActionBar(self):
-        barFrame = Frame(self.win, bg=eventViewBg)
+        barFrame = self.actionBarFrame
+
+        for child in barFrame.winfo_children():
+            child.destroy()
         barFrame.grid(sticky=W, row=self.rows, column=0, pady=10)
 
         buttonText = Font(barFrame, size=12)
@@ -76,18 +80,27 @@ class PopupWindow():
         backwardsButton.grid(column=0, row=0, padx=10)
         forwardsButton.grid(column=1, row=0, padx=10)
 
-        return
+        if self.invalidFields:
+            invalidFieldsLabel = Label(
+                barFrame, text="Not saved - One or more invalid values provided.", font=buttonText, fg="#fd3535")
+            invalidFieldsLabel.grid(column=2, row=0, padx=10)
 
     def processUpdate(self):
-        self.event = Event(self.entryValues["name"].get(), self.entryValues["description"].get(),
-                           self.entryValues["start"].get(
-        ), self.entryValues["end"].get(),
-            actualStart=self.entryValues["actualStart"].get(
-        ), actualEnd=self.entryValues["actualEnd"].get(),
-            eventType=self.entryValues["eventType"].get())
-        retVal = self.updateEventCallback(self.previousEvent, self.event)
-        if retVal:
-            self.previousEvent = self.event
+        try:
+            self.event = Event(self.entryValues["name"].get(), self.entryValues["description"].get(),
+                               self.entryValues["start"].get(
+            ), self.entryValues["end"].get(),
+                actualStart=self.entryValues["actualStart"].get(
+            ), actualEnd=self.entryValues["actualEnd"].get(),
+                eventType=self.entryValues["eventType"].get())
+
+            retVal = self.updateEventCallback(self.previousEvent, self.event)
+            if retVal:
+                self.previousEvent = self.event
+        except:
+            print("Failed to update: One or more invalid values provided")
+            self.invalidFields = True
+            self.renderActionBar()
 
     def processDeletion(self):
         retVal = self.deleteEventCallback(self.previousEvent)
