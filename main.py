@@ -1,3 +1,4 @@
+from hashlib import new
 from tkinter import *
 from buttonbars import *
 from Event import *
@@ -26,7 +27,7 @@ currentDate = datetime.datetime.today()
 # Holds the events with the rows they're going to be displayed on
 scheduledData = [[]]
 
-eventData.append(Event("Discrete Test", "NFAs", "09-26-21", "11:00 AM", "1:00 PM", eventType="event"))
+eventData.append(Event("Discrete Test", "NFAs", "11:00 AM", "1:00 PM", eventType="event", currentDate=datetime.datetime(year=2021, month=9, day=26)))
 eventData.append(Event("Science Test", "Biology","9:00 AM", "3:00 PM", eventType="event", currentDate=currentDate))
 eventData.append(Event("Science Test 2", "Biology 2","9:00 AM", "3:00 PM", eventType="event", currentDate=currentDate))
 eventData.append(Event("SS Project", "Finish our project - still waiting on Joe to notify", "8:45 AM", "11:15 AM", eventType="task", currentDate=currentDate))
@@ -38,9 +39,7 @@ eventType="event", currentDate=currentDate))
 
 eventData.append(Event("Hang out with Shelly", "Still haven't decided where we're going","7:00 PM", "11:59 PM",
 actualStart="8:00PM", actualEnd="11:59 PM", eventType="task", currentDate=currentDate))
-
-# json_handler.dump_event(eventData[0])
-
+print(eventData[0].currentDate)
 canvWidth = utils.canvWidth
 canvHeight = utils.canvHeight
 cellWidth = utils.cellWidth
@@ -68,16 +67,25 @@ def incDate():
     currentDate += datetime.timedelta(days=1)
     rerenderTopBar()
     # Swap out eventData (list of event objects) to load whatever JSON events are at the new currentDate value
-    # toDateString(dateTime) for JSON keys
-    # scheduleEvents()
-    # rerenderCanvas()
+    eventData = []
+    loadedEvents = json_handler.loadDayEvents(currentDate)
+    for eve in loadedEvents:
+        eventData.append(Event(eve['name'], eve['description'], eve['start'], eve['end'], eventType=eve['eventType'], currentDate=currentDate))
+    # TODO: scheduleEvents()
+    # TODO: rerenderCanvas()
 
 
 def decDate():
     global currentDate
     currentDate -= datetime.timedelta(days=1)
     rerenderTopBar()
-
+    # Swap out eventData (list of event objects) to load whatever JSON events are at the new currentDate value
+    eventData = []
+    loadedEvents = json_handler.loadDayEvents(currentDate)
+    for eve in loadedEvents:
+        eventData.append(Event(eve['name'], eve['description'], eve['start'], eve['end'], eventType=eve['eventType'], currentDate=currentDate))
+    # TODO: scheduleEvents()
+    # TODO: rerenderCanvas()
 
 def updateEvent(newVersion):
     # Replace previous version with new version
@@ -132,7 +140,7 @@ def scheduleEvents():
             index += 1
 
         scheduledData[index].append(singleEvent)
-
+json_handler.loadDayEvents(currentDate)
 
 def addNewEvent(event):
     eventData.append(event)
@@ -192,6 +200,7 @@ def syncCalendar():
 
         newEvent = Event(name, description, start, end,
                          fromGoogle=True, currentDate=currentDate)
+        json_handler.dumpEvent(newEvent)
         eventData.append(newEvent)
     scheduleEvents()
     rerenderCanvas()

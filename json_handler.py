@@ -5,13 +5,25 @@ import shortuuid
 import json
 
 
-# TODO: make functions for creating Event object from JSON
-def load_event(title, description, start="12:00 AM", end="12:01 AM", actualStart=None, actualEnd=None, eventType="event"):
-    return Event(title, description, start, end, actualStart, actualEnd, eventType)
+def timeString(date: datetime.datetime):
+    return date.strftime("%m-%d-%-y")
 
+# # TODO: make functions for creating Event object from JSON
+# def load_event(title, description, start="12:00 AM", end="12:01 AM", actualStart=None, actualEnd=None, eventType="event"):
+#     return Event(title, description, start, end, actualStart, actualEnd, eventType)
+
+def loadDayEvents(date: datetime.datetime):
+    with open('event_data.json', 'r') as in_file:
+        data = json.load(in_file)
+
+    try:
+        return data[timeString(date)]
+    except:
+        data[timeString(date)] = {}
+        return {}
 
 # to the data file
-def dump_event(event: Event):
+def dumpEvent(event: Event):
     export_event = {
             "name": event.name,
             "description": event.description,
@@ -26,10 +38,10 @@ def dump_event(event: Event):
         data = json.load(in_file)
 
     try:
-        data[event.date]['events'][shortuuid.uuid()]
+        data[event.currentDate][shortuuid.uuid()]
     except KeyError:
-        data[event.date] = {"events": {}}
-    data[event.date]['events'][shortuuid.uuid()] = expo
+        data[event.currentDate] = {}
+    data[event.currentDate][shortuuid.uuid()] = export_event
 
     with open('event_data.json', 'w') as out_file:
         json.dump(data, out_file, indent=2)

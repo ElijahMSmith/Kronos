@@ -25,9 +25,18 @@
       }
     }
   },
-  "09-26-21": {
-    "events": {
+  "09-26-21":
+    {
       "JLhFchcFV8aCeSbTsSTCg6": {
+        "name": "Discrete Test",
+        "description": "NFAs",
+        "eventType": "event",
+        "start": "11:00 AM",
+        "end": "1:00 PM",
+        "actualStart": "11:00 AM",
+        "actualEnd": "1:00 PM"
+      },
+      "asdoyasdhaisudyasud": {
         "name": "Discrete Test",
         "description": "NFAs",
         "eventType": "event",
@@ -37,5 +46,4 @@
         "actualEnd": "1:00 PM"
       }
     }
-  }
 }
