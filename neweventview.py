@@ -22,6 +22,8 @@ class NewEventPopupWindow():
         win.wm_title("New Event/Task")
         self.win = win
 
+        win.bind('<Return>', self.returnPressCallback)
+
         self.createDataRow("name", "Event Name: ", 50)
         self.createDataRow("description", "Event Description: ", 50)
         self.createDataRow("eventType", "Event Type (Event or Task): ", 50)
@@ -70,7 +72,11 @@ class NewEventPopupWindow():
                 barFrame, text="Not saved - One or more invalid values provided.", font=buttonText, fg="#fd3535")
             invalidFieldsLabel.grid(column=1, row=0, padx=10)
 
+    def returnPressCallback(self, origin):
+        self.processSaveAttempt()
+
     def processSaveAttempt(self):
+        print("Trying to save...")
         try:
             event = Event(self.entryValues["name"].get(), self.entryValues["description"].get(),
                           self.entryValues["start"].get(
