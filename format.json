@@ -5,12 +5,11 @@
                 "uuid": "",
                 "name": "",
                 "description": "",
-                "type": "",
-                "start time": "",
-                "end time": "",
-                "actual start time": "",
-                "actual end time": "",
-                "late": false
+                "eventType": "",
+                "start": "",
+                "end": "",
+                "actualStart": "",
+                "actualEnd": ""
             }
         ]
     },
