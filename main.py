@@ -29,31 +29,31 @@ currentDate = datetime.datetime.today()
 # Holds the events with the rows they're going to be displayed on
 scheduledData = [[]]
 
-eventData.append(Event("Science Test", "Biology",
-                 "9:00 AM", "3:00 PM", eventType="event", currentDate=currentDate))
-eventData.append(Event("Science Test 2", "Biology 2",
-                 "9:00 AM", "3:00 PM", eventType="event", currentDate=currentDate))
-eventData.append(Event(
-    "SS Project", "Finish our project - still waiting on Joe to notify", "8:45 AM", "11:15 AM", eventType="task", currentDate=currentDate))
-eventData.append(Event("Programming Test Prep", "CS1",
-                 "12:45 PM", "3:00 PM", eventType="task", currentDate=currentDate))
-eventData.append(Event(
-    "Math Test - VERY LONG NAME THAT WILL WRAP INTO LOTS OF LINES AND POTENTIALLY CAUSE LOTS OF PROBLEMS BUT HOPEFULLY WE CAN FIX THEM", "Calculus - Start of a really long description that we need to be able to wrap and limit. Can we make this even longer though and not break the text?", "8:45 AM", "9:45 AM", eventType="event", currentDate=currentDate))
-eventData.append(Event("Hang out with Shelly", "Still haven't decided where we're going",
-                       "7:00 PM", "11:00 PM", actualStart="8:00PM", actualEnd="11:00 PM", eventType="task", currentDate=currentDate))
+# eventData.append(Event("Science Test", "Biology",
+#                  "9:00 AM", "3:00 PM", eventType="event", currentDate=currentDate))
+# eventData.append(Event("Science Test 2", "Biology 2",
+#                  "9:00 AM", "3:00 PM", eventType="event", currentDate=currentDate))
+# eventData.append(Event(
+#     "SS Project", "Finish our project - still waiting on Joe to notify", "8:45 AM", "11:15 AM", eventType="task", currentDate=currentDate))
+# eventData.append(Event("Programming Test Prep", "CS1",
+#                  "12:45 PM", "3:00 PM", eventType="task", currentDate=currentDate))
+# eventData.append(Event(
+#     "Math Test - VERY LONG NAME THAT WILL WRAP INTO LOTS OF LINES AND POTENTIALLY CAUSE LOTS OF PROBLEMS BUT HOPEFULLY WE CAN FIX THEM", "Calculus - Start of a really long description that we need to be able to wrap and limit. Can we make this even longer though and not break the text?", "8:45 AM", "9:45 AM", eventType="event", currentDate=currentDate))
+# eventData.append(Event("Hang out with Shelly", "Still haven't decided where we're going",
+#                        "7:00 PM", "11:00 PM", actualStart="8:00PM", actualEnd="11:00 PM", eventType="task", currentDate=currentDate))
+# eventData.append(Event("Math Test - VERY LONG NAME THAT WILL WRAP INTO LOTS OF LINES AND POTENTIALLY CAUSE LOTS OF PROBLEMS BUT HOPEFULLY WE CAN FIX THEM",
+# "Calculus - Start of a really long description that we need to be able to wrap and limit. Can we make this even longer though and not break the text?", "8:45 AM", "9:45 AM",
+# eventType="event", currentDate=currentDate))
+# eventData.append(Event("Hang out with Shelly", "Still haven't decided where we're going","7:00 PM", "11:59 PM",
+# actualStart="8:00PM", actualEnd="11:59 PM", eventType="task", currentDate=currentDate))
 
-eventData.append(Event("Math Test - VERY LONG NAME THAT WILL WRAP INTO LOTS OF LINES AND POTENTIALLY CAUSE LOTS OF PROBLEMS BUT HOPEFULLY WE CAN FIX THEM",
-"Calculus - Start of a really long description that we need to be able to wrap and limit. Can we make this even longer though and not break the text?", "8:45 AM", "9:45 AM",
-eventType="event", currentDate=currentDate))
 
-eventData.append(Event("Hang out with Shelly", "Still haven't decided where we're going","7:00 PM", "11:59 PM",
-actualStart="8:00PM", actualEnd="11:59 PM", eventType="task", currentDate=currentDate))
-print(eventData[0].currentDate)
 canvWidth = utils.canvWidth
 canvHeight = utils.canvHeight
 cellWidth = utils.cellWidth
 
 canvStartHour = 0
+
 
 def incStart():
     global canvStartHour, dailyView
@@ -72,29 +72,26 @@ def decStart():
 
 
 def incDate():
-    global currentDate
+    global currentDate, eventData
     currentDate += datetime.timedelta(days=1)
     rerenderTopBar()
     # Swap out eventData (list of event objects) to load whatever JSON events are at the new currentDate value
     eventData = []
-    loadedEvents = json_handler.loadDayEvents(currentDate)
-    for eve in loadedEvents:
-        eventData.append(Event(eve['name'], eve['description'], eve['start'], eve['end'], eventType=eve['eventType'], currentDate=currentDate))
-    # TODO: scheduleEvents()
-    # TODO: rerenderCanvas()
+    eventData = json_handler.loadDayEvents(currentDate)
+    scheduleEvents()
+    rerenderCanvas()
 
 
 def decDate():
-    global currentDate
+    global currentDate, eventData
     currentDate -= datetime.timedelta(days=1)
     rerenderTopBar()
     # Swap out eventData (list of event objects) to load whatever JSON events are at the new currentDate value
     eventData = []
-    loadedEvents = json_handler.loadDayEvents(currentDate)
-    for eve in loadedEvents:
-        eventData.append(Event(eve['name'], eve['description'], eve['start'], eve['end'], eventType=eve['eventType'], currentDate=currentDate))
-    # TODO: scheduleEvents()
-    # TODO: rerenderCanvas()
+    eventData = json_handler.loadDayEvents(currentDate)
+    scheduleEvents()
+    rerenderCanvas()
+
 
 def updateEvent(newVersion):
     # Replace previous version with new version
@@ -103,9 +100,7 @@ def updateEvent(newVersion):
         event = eventData[i]
         if event.uuid == newVersion.uuid:
             eventData[i] = newVersion
-
-            # Save the JSON for the updated event in place of the existing event at the currentDate
-
+            json_handler.updateJSON(newVersion, currentDate)
             scheduleEvents()
             rerenderCanvas()
             return True
@@ -118,9 +113,7 @@ def deleteEvent(previousVersion):
         event = eventData[i]
         if event.uuid == previousVersion.uuid:
             eventData.remove(event)
-
-            # Delete the JSON object of the deleted event
-
+            json_handler.delete_event(previousVersion, currentDate)
             scheduleEvents()
             rerenderCanvas()
             return True
@@ -149,13 +142,11 @@ def scheduleEvents():
             index += 1
 
         scheduledData[index].append(singleEvent)
-json_handler.loadDayEvents(currentDate)
+
 
 def addNewEvent(event):
     eventData.append(event)
-
-    # Update the JSON object for the currentDate to include this new event
-
+    json_handler.new_event(event, currentDate)
     scheduleEvents()
     rerenderCanvas()
 
@@ -206,8 +197,8 @@ def syncCalendar():
 
         newEvent = Event(name, description, start, end,
                          fromGoogle=True, currentDate=currentDate)
-        json_handler.dumpEvent(newEvent)
         eventData.append(newEvent)
+        json_handler.new_event(newEvent, currentDate)
     scheduleEvents()
     rerenderCanvas()
 
@@ -217,7 +208,7 @@ def generateDailyReview():
     if not(breakdownPopup is None) and not (breakdownPopup.win is None):
         breakdownPopup.win.destroy()
     breakdownPopup = ReviewPopup(currentDate, eventData,
-                        scheduledData, frequency="daily")
+                                 scheduledData, frequency="daily")
 
 
 def generateWeeklyReview():
@@ -225,7 +216,7 @@ def generateWeeklyReview():
     if not(breakdownPopup is None) and not (breakdownPopup.win is None):
         breakdownPopup.win.destroy()
     breakdownPopup = ReviewPopup(currentDate, eventData,
-                        scheduledData, frequency="weekly")
+                                 scheduledData, frequency="weekly")
 
 
 def rerenderTopBar():
@@ -245,6 +236,7 @@ def rerenderCanvas():
                    (updateEvent, deleteEvent))
 
 
+eventData = json_handler.loadDayEvents(currentDate)
 scheduleEvents()
 
 window = Tk()

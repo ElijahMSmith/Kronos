@@ -6,7 +6,8 @@ from tkinter.font import Font
 eventViewBg = constants.eventViewBg
 eventViewButtonBg = constants.eventViewButtonBg
 eventViewButtonBgActive = constants.eventViewButtonBgActive
-#TEST
+# TEST
+
 
 class NewEventPopupWindow():
     def __init__(self, appendNewEventCallback, currentDate):
@@ -78,20 +79,20 @@ class NewEventPopupWindow():
 
     def processSaveAttempt(self):
         print("Trying to save...")
-        try:
-            event = Event(self.entryValues["name"].get(), self.entryValues["description"].get(),
-                          self.entryValues["start"].get(
-            ), self.entryValues["end"].get(),
-                actualStart=self.entryValues["actualStart"].get(
-            ), actualEnd=self.entryValues["actualEnd"].get(),
-                eventType=self.entryValues["eventType"].get(), currentDate=self.currentDate)
+        # try:
+        event = Event(self.entryValues["name"].get(), self.entryValues["description"].get(),
+                      self.entryValues["start"].get(
+        ), self.entryValues["end"].get(),
+            actualStart=self.entryValues["actualStart"].get(
+        ), actualEnd=self.entryValues["actualEnd"].get(),
+            eventType=self.entryValues["eventType"].get(), currentDate=self.currentDate)
 
-            print("Created event successfully")
-            self.appendCallback(event)
-            print("Appended event successfully")
-            self.invalidFields = False
-            self.win.destroy()
-        except:
-            print("Not saved")
-            self.invalidFields = True
-            self.rerenderActionBar()
+        print("Created event successfully")
+        self.appendCallback(event)
+        print("Appended event successfully")
+        self.invalidFields = False
+        self.win.destroy()
+        # except:
+        #     print("Not saved")
+        #     self.invalidFields = True
+        #     self.rerenderActionBar()

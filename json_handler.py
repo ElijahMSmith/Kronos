@@ -1,58 +1,101 @@
 from datetime import datetime
 from tkinter import Widget
+from util import toDateString, getTimeString
 from Event import *
 import shortuuid
 import json
 
 
-def timeString(date: datetime.datetime):
-    return date.strftime("%m-%d-%-y")
-
-# # TODO: make functions for creating Event object from JSON
-# def load_event(title, description, start="12:00 AM", end="12:01 AM", actualStart=None, actualEnd=None, eventType="event"):
-#     return Event(title, description, start, end, actualStart, actualEnd, eventType)
-
 def loadDayEvents(date: datetime.datetime):
     with open('event_data.json', 'r') as in_file:
-        data = json.load(in_file)
+        allData = json.load(in_file)
 
-    try:
-        return data[timeString(date)]
-    except:
-        data[timeString(date)] = {}
-        return {}
+        try:
+            loadData = allData[toDateString(date)]['events']
+            print(loadData)
+            retData = []
+            for obj in loadData:
+                retData.append(
+                    Event(name=obj["name"], description=obj["description"], start=obj["start"], end=obj["end"], actualStart=obj["actualStart"], actualEnd=obj["actualEnd"], eventType=obj["eventType"], fromGoogle=obj["fromGoogle"], existingUUID=obj["existingUUID"]))
+            return retData
+        except:
+            return []
 
-# to the data file
-def dumpEvent(event: Event):
+
+def updateJSON(event: Event, currentDate):
     export_event = {
-            "name": event.name,
-            "description": event.description,
-            "eventType": event.eventType,
-            "start": event.start.timeString,
-            "end": event.end.timeString,
-            "actualStart": event.actualStart.timeString,
-            "actualEnd": event.actualEnd.timeString
-        }
+        "existingUUID": event.uuid,
+        "name": event.name,
+        "description": event.description,
+        "eventType": event.eventType,
+        "start": getTimeString(event.start),
+        "end": getTimeString(event.end),
+        "actualStart": getTimeString(event.actualStart),
+        "actualEnd": getTimeString(event.actualEnd),
+        "fromGoogle": event.fromGoogle,
+    }
 
     with open('event_data.json', 'r') as in_file:
         data = json.load(in_file)
 
-    try:
-        data[event.currentDate][shortuuid.uuid()]
-    except KeyError:
-        data[event.currentDate] = {}
-    data[event.currentDate][shortuuid.uuid()] = export_event
+        if not (toDateString(currentDate) in data):
+            data[toDateString(currentDate)] = {"events": []}
+
+        eventObjects = data[toDateString(currentDate)]['events']
+
+        for obj in eventObjects:
+            if obj["existingUUID"] == export_event.existingUUID:
+                del obj
+                eventObjects.append(export_event)
+                break
+
+        with open('event_data.json', 'w') as out_file:
+            json.dump(data, out_file, indent=4)
+
+
+def new_event(event, currentDate):
+    export_event = {
+        "existingUUID": event.uuid,
+        "name": event.name,
+        "description": event.description,
+        "eventType": event.eventType,
+        "start": getTimeString(event.start),
+        "end": getTimeString(event.end),
+        "actualStart": getTimeString(event.actualStart),
+        "actualEnd": getTimeString(event.actualEnd),
+        "fromGoogle": event.fromGoogle,
+    }
+
+    with open('event_data.json', 'r') as in_file:
+        data = json.load(in_file)
+
+        if not (toDateString(currentDate) in data):
+            data[toDateString(currentDate)] = {"events": []}
+
+        eventObjects = data[toDateString(currentDate)]['events']
+        eventObjects.append(export_event)
+
+        with open('event_data.json', 'w') as out_file:
+            json.dump(data, out_file, indent=4)
+
+
+def delete_event(event, currentDate):
+    matchUUID = event.uuid
+
+    with open('event_data.json', 'r') as in_file:
+        data = json.load(in_file)
+
+    if not (toDateString(currentDate) in data):
+        return
+
+    print("pre-del", data)
+    eventObjects = data[toDateString(currentDate)]['events']
+    for obj in eventObjects:
+        if obj["existingUUID"] == matchUUID:
+            print("found")
+            del obj
+            break
+    print("post-del", data)
 
     with open('event_data.json', 'w') as out_file:
-        json.dump(data, out_file, indent=2)
-
-def new_event(title, description, start="12:00 AM", end="12:01 AM", actualStart=None, actualEnd=None, eventType="event"):
-    uuid = shortuuid.uuid()
-
-# loads event from the data file to edit and save back to the data file
-def edit_event():
-    pass
-
-# deletes event from the data file
-def delete_event():
-    pass
+        json.dump(data, out_file, indent=4)

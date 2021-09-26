@@ -1,5 +1,5 @@
 from util import getDateTime
-import uuid
+import shortuuid
 import datetime
 
 
@@ -16,7 +16,7 @@ class Event:
         self.fromGoogle = fromGoogle
 
         if existingUUID is None:
-            self.uuid = uuid.uuid4()
+            self.uuid = shortuuid.uuid()
         else:
             self.uuid = existingUUID
 

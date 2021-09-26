@@ -1,49 +1,65 @@
 {
-  "09-24-21": {
-    "events": {
-      "uuid": {
-        "name": "",
-        "description": "",
-        "eventType": "",
-        "start": "",
-        "end": "",
-        "actualStart": "",
-        "actualEnd": ""
-      }
-    }
-  },
-  "09-25-21": {
-    "events": {
-      "uuid": {
-        "name": "",
-        "description": "",
-        "eventType": "",
-        "start": "",
-        "end": "",
-        "actualStart": "",
-        "actualEnd": ""
-      }
-    }
-  },
-  "09-26-21":
-    {
-      "JLhFchcFV8aCeSbTsSTCg6": {
-        "name": "Discrete Test",
-        "description": "NFAs",
-        "eventType": "event",
-        "start": "11:00 AM",
-        "end": "1:00 PM",
-        "actualStart": "11:00 AM",
-        "actualEnd": "1:00 PM"
-      },
-      "asdoyasdhaisudyasud": {
-        "name": "Discrete Test",
-        "description": "NFAs",
-        "eventType": "event",
-        "start": "11:00 AM",
-        "end": "1:00 PM",
-        "actualStart": "11:00 AM",
-        "actualEnd": "1:00 PM"
-      }
+    "09/26/2021": {
+        "events": [
+            {
+                "existingUUID": "JLhFchcFV8aCeSbTsSTCg6",
+                "name": "Science Test",
+                "description": "Bio",
+                "eventType": "event",
+                "start": "8:00 AM",
+                "end": "10:00 AM",
+                "actualStart": "8:00 AM",
+                "actualEnd": "10:00 AM",
+                "fromGoogle": false
+            },
+            {
+                "existingUUID": "asdoyasdhaisudyasud",
+                "name": "Discrete Test",
+                "description": "NFAs",
+                "eventType": "event",
+                "start": "11:00 AM",
+                "end": "1:00 PM",
+                "actualStart": "11:00 AM",
+                "actualEnd": "1:00 PM",
+                "fromGoogle": false
+            },
+            {
+                "existingUUID": "Bc8NAqasVw6owBAapZKsZe",
+                "name": "test1",
+                "description": "test",
+                "eventType": "task",
+                "start": "3:00 AM",
+                "end": "4:00 AM",
+                "actualStart": "3:00 AM",
+                "actualEnd": "4:00 AM",
+                "fromGoogle": false
+            }
+        ]
+    },
+    "09/27/2021": {
+        "events": [
+            {
+                "existingUUID": "hkj234l213n1kl23nl123",
+                "name": "Math HW",
+                "description": "Calc",
+                "eventType": "task",
+                "start": "11:00 AM",
+                "end": "1:00 PM",
+                "actualStart": "11:00 AM",
+                "actualEnd": "1:00 PM",
+                "fromGoogle": false
+            },
+            {
+                "existingUUID": "12h3lj1454l2nj3l4n52l3453",
+                "name": "Calc Test",
+                "description": "Integrals",
+                "eventType": "event",
+                "start": "12:00 PM",
+                "end": "3:30 PM",
+                "actualStart": "12:10 PM",
+                "actualEnd": "1:00 PM",
+                "fromGoogle": false
+            }
+        ]
     }
 }
