@@ -107,14 +107,15 @@ def renderEvents(canvas, scheduledData, canvStartHour):
         if i == 0:
             continue
 
-        displayHour = canvStartHour+(i/cellWidth)
+        hour = canvStartHour+(i/cellWidth)
+        displayHour = hour
         if displayHour == 0:
             displayHour = 12
         elif displayHour > 12:
             displayHour = displayHour % 12
 
         text = canvas.create_text(i, 30, fill="darkblue", text=str(
-            int(displayHour))+":00"+("PM" if canvStartHour >= 12 else "AM"), font=timeLabels)
+            int(displayHour))+":00"+("PM" if hour >= 12 else "AM"), font=timeLabels)
 
     # Render events as blocks under the correct time
     # The correct index has already been determined by the function in main, so we put it
