@@ -29,12 +29,12 @@ def renderTopBar(frame, currentDate, callbacks):
 
     prevDay = Button(dayDisplayFrame, text="<", command=decDate,
                      fg="white", bg="#318c37", activebackground="#40a85c",
-                     font=buttonText, width=15)
+                     font=buttonText, width=3)
     dayLabel = Label(dayDisplayFrame, bg="white", text=toDateString(
         currentDate), font=buttonText)
     nextDay = Button(dayDisplayFrame, text=">", command=incDate,
                      fg="white", bg="#318c37", activebackground="#40a85c",
-                     font=buttonText, width=15)
+                     font=buttonText, width=3)
 
     prevDay.grid(column=0, row=0, padx=(50, 10), pady=(10, 10))
     dayLabel.grid(column=1, row=0, padx=(10, 10), pady=(10, 10))
@@ -83,9 +83,9 @@ def renderBottomBar(frame, callbacks):
     dailyReviewButton = Button(reviewFrame, text="Daily Review", command=dailyReview,
                                fg="white", bg="#318c37", activebackground="#40a85c",
                                font=buttonText)
-    weeklyReviewButton = Button(reviewFrame, text="Weekly Review", command=weeklyReview,
-                                fg="white", bg="#318c37", activebackground="#40a85c",
-                                font=buttonText)
+    # weeklyReviewButton = Button(reviewFrame, text="Weekly Review", command=weeklyReview,
+    #                             fg="white", bg="#318c37", activebackground="#40a85c",
+    #                             font=buttonText)
 
-    dailyReviewButton.grid(column=0, row=0, padx=(10, 10), pady=(10, 10))
-    weeklyReviewButton.grid(column=1, row=0, padx=(10, 50), pady=(10, 10))
+    dailyReviewButton.grid(column=0, row=0, padx=(10, 50), pady=(10, 10))
+    # weeklyReviewButton.grid(column=1, row=0, padx=(10, 50), pady=(10, 10))

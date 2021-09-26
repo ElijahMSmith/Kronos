@@ -4,6 +4,8 @@ import util as constants
 from tkinter.font import Font
 
 breakdownBg = constants.breakdownBg
+dangerCategoryFg = "#850000"
+goodCategoryFg = "#008516"
 
 
 class ReviewPopup():
@@ -58,7 +60,7 @@ class ReviewPopup():
             if event.actualEnd < event.end:
                 finishedEarly += 1
 
-            ms = (event.actualEnd - event.end).total_seconds() / 60
+            ms = (event.end - event.actualEnd).total_seconds() / 60
             if ms < 0:
                 ms = 0
             minutesSaved += ms
@@ -156,39 +158,109 @@ class ReviewPopup():
         stats = self.stats
         self.labelFont = Font(win, size=12)
 
-        self.genLabel("Total Minutes Spent in Engagements", stats[0])
-        self.genLabel("Total Minutes Spent on Events", stats[1])
-        self.genLabel("Total Minutes Spent on Tasks", stats[2])
-        self.genLabel("Total Minutes Not in Engagements",
-                      str(round(stats[3], 2)) + "/" + str(24 * 60))
-        self.genLabel("Percentage of Time Not in Engagements", stats[4], True)
-
-        self.genLabel("Number of Engagements Started on Time", stats[5])
-        self.genLabel("Number of Engagements Started Late", stats[6])
-        self.genLabel("Number of Engagements Finished Early", stats[7])
+        self.statsFrame = Frame(win, bg=breakdownBg)
+        self.statsFrame.pack(side=LEFT)
 
         self.genLabel(
-            "Percentage of Engagements Started on Time", stats[8], True)
-        self.genLabel("Percentage of Engagements Started Late", stats[9], True)
+            "Total Minutes Allocated to Engagements (Concurrent)", stats[0], category="NEUTRAL")
+        self.genLabel("Total Minutes Spent on Events",
+                      stats[1], category="NEUTRAL")
+        self.genLabel("Total Minutes Spent on Tasks",
+                      stats[2], category="NEUTRAL")
+        self.genLabel("Total Minutes Not in Engagements",
+                      str(round(stats[3], 2)) + "/" + str(24 * 60), category="GOOD")
+        self.genLabel("Percentage of Day Not in Engagements",
+                      stats[4], True, category="GOOD")
+
+        self.genLabel("Number of Engagements Started on Time",
+                      stats[5], category="GOOD")
+        self.genLabel("Number of Engagements Started Late",
+                      stats[6], category="DANGER")
+        self.genLabel("Number of Engagements Finished Early",
+                      stats[7], category="GOOD")
+
+        self.genLabel(
+            "Percentage of Engagements Started on Time", stats[8], True, category="GOOD")
+        self.genLabel("Percentage of Engagements Started Late",
+                      stats[9], True, category="DANGER")
         self.genLabel("Percentage of Engagements Finished Early",
-                      stats[10], True)
+                      stats[10], True, category="GOOD")
 
-        self.genLabel("Minutes Saved from Engagements", stats[11])
+        self.genLabel("Minutes Saved from Engagements",
+                      stats[11], category="GOOD")
 
-        self.genLabel("Number of Total Late Minutes", stats[12])
-        self.genLabel("Percentage Late of Total Minutes", stats[13], True)
-        self.genLabel("Most Late Started Engagement", stats[14])
-        self.genLabel("Most Late Minutes of Any Engagement", stats[15])
+        self.genLabel("Number of Total Late Minutes",
+                      stats[12], category="DANGER")
+        self.genLabel("Percentage Late of Total Minutes",
+                      stats[13], True, category="DANGER")
+        self.genLabel("Most Late Started Engagement",
+                      stats[14], category="DANGER")
+        self.genLabel("Most Late Minutes of Any Engagement",
+                      stats[15], category="DANGER")
 
-    def genLabel(self, text, value, percent=False):
+        barFrame = Frame(win, bg=breakdownBg)
+        barFrame.pack(side=RIGHT)
+        frameLabel = Label(barFrame, text='Minutes Per Category',
+                           font=self.labelFont)
+        frameLabel.grid(row=0, column=0)
+
+        data = [stats[1], stats[2], stats[3], stats[11], stats[12]]
+        colors = ["#31a33a",  "#cf7800", "#bf3000", "#0076bf", "#4300bf"]
+
+        maxHeight = max(data) * 1.1
+
+        c_width = 400
+        c_height = 400
+        gapWidth = 40
+        barWidth = (400 - (gapWidth * (len(data) + 1))) / len(data)
+        c = Canvas(barFrame, width=c_width, height=c_height)
+        c.grid(row=1, column=0)
+
+        for i in range(0, len(data)):
+            barHeight = data[i]/maxHeight * (c_height - 40)
+            x0 = gapWidth * (i + 1) + barWidth * (i)
+            x1 = x0 + barWidth
+            y0 = c_height - 20
+            y1 = c_height - 20 - barHeight
+
+            # Here we draw the bar
+            c.create_rectangle(x0, y0, x1, y1, fill=colors[i])
+            c.create_text(x0 + 15, y0 + 10, text=str(data[i]))
+
+        keyLabel1 = Label(barFrame, text='# Minutes of Events',
+                          font=self.labelFont, fg=colors[0], bg=breakdownBg)
+        keyLabel1.grid(row=2, column=0)
+
+        keyLabel2 = Label(barFrame, text='# Minutes of Tasks',
+                          font=self.labelFont, fg=colors[1], bg=breakdownBg)
+        keyLabel2.grid(row=3, column=0)
+
+        keyLabel3 = Label(barFrame, text='# Minutes not in Engagements',
+                          font=self.labelFont, fg=colors[2], bg=breakdownBg)
+        keyLabel3.grid(row=4, column=0)
+
+        keyLabel4 = Label(barFrame, text='# Minutes Saved',
+                          font=self.labelFont, fg=colors[3], bg=breakdownBg)
+        keyLabel4.grid(row=5, column=0)
+
+        keyLabel5 = Label(barFrame, text='# Late Minutes',
+                          font=self.labelFont, fg=colors[4], bg=breakdownBg)
+        keyLabel5.grid(row=6, column=0)
+
+    def genLabel(self, text, value, percent=False, category="NEUTRAL"):
         adjustedValue = value
         if not isinstance(value, str):
             adjustedValue = str(
                 round(value if (not percent) else (value * 100), 2))
 
-        label = Label(self.win, text=text + ": " + adjustedValue + ("%" if percent else ""),
-                      font=self.labelFont, bg=breakdownBg)
-        label.grid(row=self.row, column=0, padx=10, pady=10)
+        innerFrame = Frame(self.statsFrame, bg=breakdownBg)
+        innerFrame.grid(row=self.row, padx=10, pady=10)
+        labelPrefix = Label(innerFrame, text=text + ": ",
+                            font=self.labelFont, bg=breakdownBg)
+        labelPrefix.grid(row=0, column=0)
+        labelSuffix = Label(innerFrame, text=adjustedValue + ("%" if percent else ""),
+                            font=self.labelFont, bg=breakdownBg, fg=(dangerCategoryFg if category == "DANGER" else (goodCategoryFg if category == "GOOD" else "black")))
+        labelSuffix.grid(row=0, column=1)
         self.row += 1
 
     def destroyWindow(self, eventOrigin):
