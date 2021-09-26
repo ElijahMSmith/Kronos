@@ -9,9 +9,11 @@ eventViewButtonBgActive = constants.eventViewButtonBgActive
 
 
 class PopupWindow():
-    def __init__(self, event, updateEventCallback, deleteEventCallback):
+    def __init__(self, currentDate, event, updateEventCallback, deleteEventCallback):
+        print(event)
         self.previousEvent = event.__copy__()
         self.event = event
+        self.currentDate = currentDate
         self.invalidFields = False
         self.updateEventCallback = updateEventCallback
         self.deleteEventCallback = deleteEventCallback
@@ -53,7 +55,13 @@ class PopupWindow():
         propLabel.grid(row=0, column=0)
 
         entryValueText = StringVar()
-        entryValueText.set(str(getattr(self.previousEvent, propertyName)))
+
+        attrData = getattr(self.previousEvent, propertyName)
+        if isinstance(attrData, datetime.datetime):
+            entryValueText.set(constants.getTimeString(attrData))
+        else:
+            entryValueText.set(attrData)
+
         propEntry = Entry(propertyFrame, width=entryWidth, textvariable=entryValueText,
                           state=DISABLED if not enabled else NORMAL)
         propEntry.grid(row=0, column=1)
@@ -86,21 +94,21 @@ class PopupWindow():
             invalidFieldsLabel.grid(column=2, row=0, padx=10)
 
     def processUpdate(self):
-        try:
-            self.event = Event(self.entryValues["name"].get(), self.entryValues["description"].get(),
-                               self.entryValues["start"].get(
-            ), self.entryValues["end"].get(),
-                actualStart=self.entryValues["actualStart"].get(
-            ), actualEnd=self.entryValues["actualEnd"].get(),
-                eventType=self.entryValues["eventType"].get())
+        # try:
+        self.event = Event(self.entryValues["name"].get(), self.entryValues["description"].get(),
+                           self.entryValues["start"].get(
+        ), self.entryValues["end"].get(),
+            actualStart=self.entryValues["actualStart"].get(
+        ), actualEnd=self.entryValues["actualEnd"].get(),
+            eventType=self.entryValues["eventType"].get(), existingUUID=self.previousEvent.uuid, currentDate=self.currentDate)
 
-            retVal = self.updateEventCallback(self.previousEvent, self.event)
-            if retVal:
-                self.previousEvent = self.event
-        except:
-            print("Failed to update: One or more invalid values provided")
-            self.invalidFields = True
-            self.renderActionBar()
+        retVal = self.updateEventCallback(self.event)
+        if retVal:
+            self.previousEvent = self.event
+        # except:
+        #     print("Failed to update: One or more invalid values provided")
+        #     self.invalidFields = True
+        #     self.renderActionBar()
 
     def processDeletion(self):
         retVal = self.deleteEventCallback(self.previousEvent)

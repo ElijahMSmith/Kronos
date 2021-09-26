@@ -9,8 +9,9 @@ eventViewButtonBgActive = constants.eventViewButtonBgActive
 
 
 class NewEventPopupWindow():
-    def __init__(self, appendNewEventCallback):
+    def __init__(self, appendNewEventCallback, currentDate):
         self.rows = 0
+        self.currentDate = currentDate
         self.invalidFields = False
         self.entryValues = {}  # .has_key(key_to_lookup):
         self.appendCallback = appendNewEventCallback
@@ -83,7 +84,7 @@ class NewEventPopupWindow():
             ), self.entryValues["end"].get(),
                 actualStart=self.entryValues["actualStart"].get(
             ), actualEnd=self.entryValues["actualEnd"].get(),
-                eventType=self.entryValues["eventType"].get())
+                eventType=self.entryValues["eventType"].get(), currentDate=self.currentDate)
 
             print("Created event successfully")
             self.appendCallback(event)

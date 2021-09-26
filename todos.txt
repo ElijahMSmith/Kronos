@@ -1,2 +1,15 @@
 - When calendar updates, save to file
     - One file, keep the JSON format
+
+
+
+
+- Breakdown statistics:
+    - # on time
+    - # late
+    - % on time
+    - % late
+    - total late minutes
+    - Weekly
+        - Days with the most late events
+        - Days with the most late minutes
