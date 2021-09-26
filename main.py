@@ -1,7 +1,7 @@
 from tkinter import *
 from buttonbars import *
 from Event import *
-import data_handler
+import json_handler
 from datetime import date
 import util as utils
 from dailyview import renderCalendar
@@ -26,22 +26,20 @@ currentDate = datetime.datetime.today()
 # Holds the events with the rows they're going to be displayed on
 scheduledData = [[]]
 
-eventData.append(
-    Event("Discrete Test", "NFAs", "09-26-21", "11:00 AM", "1:00 PM", eventType="event"))
-eventData.append(Event("Science Test", "Biology",
-                 "9:00 AM", "3:00 PM", eventType="event", currentDate=currentDate))
-eventData.append(Event("Science Test 2", "Biology 2",
-                 "9:00 AM", "3:00 PM", eventType="event", currentDate=currentDate))
-eventData.append(Event(
-    "SS Project", "Finish our project - still waiting on Joe to notify", "8:45 AM", "11:15 AM", eventType="task", currentDate=currentDate))
-eventData.append(Event("Programming Test Prep", "CS1",
-                 "12:45 PM", "3:00 PM", eventType="task", currentDate=currentDate))
-eventData.append(Event(
-    "Math Test - VERY LONG NAME THAT WILL WRAP INTO LOTS OF LINES AND POTENTIALLY CAUSE LOTS OF PROBLEMS BUT HOPEFULLY WE CAN FIX THEM", "Calculus - Start of a really long description that we need to be able to wrap and limit. Can we make this even longer though and not break the text?", "8:45 AM", "9:45 AM", eventType="event", currentDate=currentDate))
-eventData.append(Event("Hang out with Shelly", "Still haven't decided where we're going",
-                       "7:00 PM", "11:59 PM", actualStart="8:00PM", actualEnd="11:59 PM", eventType="task", currentDate=currentDate))
+eventData.append(Event("Discrete Test", "NFAs", "09-26-21", "11:00 AM", "1:00 PM", eventType="event"))
+eventData.append(Event("Science Test", "Biology","9:00 AM", "3:00 PM", eventType="event", currentDate=currentDate))
+eventData.append(Event("Science Test 2", "Biology 2","9:00 AM", "3:00 PM", eventType="event", currentDate=currentDate))
+eventData.append(Event("SS Project", "Finish our project - still waiting on Joe to notify", "8:45 AM", "11:15 AM", eventType="task", currentDate=currentDate))
+eventData.append(Event("Programming Test Prep", "CS1", "12:45 PM", "3:00 PM", eventType="task", currentDate=currentDate))
 
-data_handler.dump_event(eventData[0])
+eventData.append(Event("Math Test - VERY LONG NAME THAT WILL WRAP INTO LOTS OF LINES AND POTENTIALLY CAUSE LOTS OF PROBLEMS BUT HOPEFULLY WE CAN FIX THEM",
+"Calculus - Start of a really long description that we need to be able to wrap and limit. Can we make this even longer though and not break the text?", "8:45 AM", "9:45 AM",
+eventType="event", currentDate=currentDate))
+
+eventData.append(Event("Hang out with Shelly", "Still haven't decided where we're going","7:00 PM", "11:59 PM",
+actualStart="8:00PM", actualEnd="11:59 PM", eventType="task", currentDate=currentDate))
+
+# json_handler.dump_event(eventData[0])
 
 canvWidth = utils.canvWidth
 canvHeight = utils.canvHeight
