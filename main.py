@@ -1,6 +1,7 @@
 from tkinter import *
 from buttonbars import *
 from Event import *
+import data_handler
 from datetime import date
 import util as utils
 from dailyview import renderCalendar
@@ -21,8 +22,10 @@ currentDate = datetime.datetime.today()
 # Holds the events with the rows they're going to be displayed on
 scheduledData = [[]]
 
+
+
 eventData.append(
-    Event("Discrete Test", "NFAs", "11:00 AM", "1:00 PM", eventType="event"))
+    Event("Discrete Test", "NFAs", "09-26-21", "11:00 AM", "1:00 PM", eventType="event"))
 eventData.append(Event("Science Test", "Biology",
                  "9:00 AM", "3:00 PM", eventType="event"))
 eventData.append(Event("Science Test 2", "Biology 2",
@@ -36,12 +39,13 @@ eventData.append(Event(
 eventData.append(Event("Hang out with Shelly", "Still haven't decided where we're going",
                        "7:00 PM", "11:59 PM", actualStart="8:00PM", actualEnd="11:59 PM", eventType="task"))
 
+data_handler.dump_event(eventData[0])
+
 canvWidth = utils.canvWidth
 canvHeight = utils.canvHeight
 cellWidth = utils.cellWidth
 
 canvStartHour = 0
-
 
 def incStart():
     global canvStartHour, dailyView
