@@ -1,0 +1,41 @@
+{
+  "09-24-21": {
+    "events": {
+      "uuid": {
+        "name": "",
+        "description": "",
+        "eventType": "",
+        "start": "",
+        "end": "",
+        "actualStart": "",
+        "actualEnd": ""
+      }
+    }
+  },
+  "09-25-21": {
+    "events": {
+      "uuid": {
+        "name": "",
+        "description": "",
+        "eventType": "",
+        "start": "",
+        "end": "",
+        "actualStart": "",
+        "actualEnd": ""
+      }
+    }
+  },
+  "09-26-21": {
+    "events": {
+      "JLhFchcFV8aCeSbTsSTCg6": {
+        "name": "Discrete Test",
+        "description": "NFAs",
+        "eventType": "event",
+        "start": "11:00 AM",
+        "end": "1:00 PM",
+        "actualStart": "11:00 AM",
+        "actualEnd": "1:00 PM"
+      }
+    }
+  }
+}
