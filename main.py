@@ -179,6 +179,7 @@ def syncCalendar():
         e = eventData[i]
         if e.fromGoogle == True:
             eventData.remove(e)
+            json_handler.delete_event(e, currentDate)
         else:
             i += 1
 
