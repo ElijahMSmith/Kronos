@@ -1,8 +1,7 @@
 {
-    "09-24-2021": {
-        "events": [
-            {
-                "uuid": "",
+    "09-24-21": {
+        "events": {
+            "uuid": {
                 "name": "",
                 "description": "",
                 "eventType": "",
@@ -11,20 +10,19 @@
                 "actualStart": "",
                 "actualEnd": ""
             }
-        ]
+        }
     },
-    "09-25-2021": {
-        "events": [
-            {
-                "uuid": "",
-                "name": "",
-                "description": "",
-                "eventType": "",
-                "start": "",
-                "end": "",
-                "actualStart": "",
-                "actualEnd": ""
+    "09-25-21": {
+        "events": {
+            "uuid": {
+                    "name": "",
+                    "description": "",
+                    "eventType": "",
+                    "start": "",
+                    "end": "",
+                    "actualStart": "",
+                    "actualEnd": ""
             }
-        ]
+        }
     }
 }
