@@ -2,9 +2,10 @@ from util import getTimeString
 
 
 class Event:
-    def __init__(self, name, description, start="12:00 AM", end="12:01 AM", actualStart=None, actualEnd=None, eventType="event"):
+    def __init__(self, name, description, date="09-26-21", start="12:00 AM", end="12:01 AM", actualStart=None, actualEnd=None, eventType="event"):
         self.name = name
         self.description = description
+        self.date = date
         etLower = eventType.lower()
         if not (etLower == "event" or etLower == "task"):
             etLower = "event"
