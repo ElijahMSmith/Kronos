@@ -8,15 +8,13 @@ def toDateString(dt):
 def getTimeString(datetime):
     hour = datetime.hour
     minute = datetime.minute
+    PM = datetime.hour >= 12
 
-    if hour < 12:
-        if hour == 0:
-            hour == 12
-        return str(hour) + ":" + ("0" if minute < 10 else "") + str(minute) + " AM"
-    else:
-        if hour != 12:
-            hour %= 12
-        return str(hour) + ":" + ("0" if minute < 10 else "") + str(minute) + " PM"
+    if PM:
+        hour = hour % 12
+    if hour == 0:
+        hour = 12
+    return str(hour) + ":" + ("0" if minute < 10 else "") + str(minute) + (" PM" if PM else " AM")
 
 
 def getDateTime(currentDateTime, timeString):

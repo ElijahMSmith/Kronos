@@ -14,6 +14,8 @@ buttonbar = None
 dailyView = None
 weeklyView = None
 
+breakdownPopup = None
+
 # TIME FORMAT: HH:MM AM/PM
 # Accepted times: 12:00 AM - 11:59 PM
 # Holds the raw events
@@ -36,7 +38,7 @@ eventData.append(Event("Programming Test Prep", "CS1",
 eventData.append(Event(
     "Math Test - VERY LONG NAME THAT WILL WRAP INTO LOTS OF LINES AND POTENTIALLY CAUSE LOTS OF PROBLEMS BUT HOPEFULLY WE CAN FIX THEM", "Calculus - Start of a really long description that we need to be able to wrap and limit. Can we make this even longer though and not break the text?", "8:45 AM", "9:45 AM", eventType="event", currentDate=currentDate))
 eventData.append(Event("Hang out with Shelly", "Still haven't decided where we're going",
-                       "7:00 PM", "11:59 PM", actualStart="8:00PM", actualEnd="11:59 PM", eventType="task", currentDate=currentDate))
+                       "7:00 PM", "11:00 PM", actualStart="8:00PM", actualEnd="11:00 PM", eventType="task", currentDate=currentDate))
 
 canvWidth = utils.canvWidth
 canvHeight = utils.canvHeight
@@ -168,13 +170,10 @@ def syncCalendar():
     i = 0
     while len(eventData) > i:
         e = eventData[i]
-        print(e)
         if e.fromGoogle == True:
-            print("Removing")
             eventData.remove(e)
         else:
             i += 1
-        print(len(eventData))
 
     for e in google_events_list:
         name = e['summary']
@@ -196,12 +195,18 @@ def syncCalendar():
 
 
 def generateDailyReview():
-    popup = ReviewPopup(currentDate, eventData,
+    global breakdownPopup
+    if not(breakdownPopup is None) and not (breakdownPopup.win is None):
+        breakdownPopup.win.destroy()
+    breakdownPopup = ReviewPopup(currentDate, eventData,
                         scheduledData, frequency="daily")
 
 
 def generateWeeklyReview():
-    popup = ReviewPopup(currentDate, eventData,
+    global breakdownPopup
+    if not(breakdownPopup is None) and not (breakdownPopup.win is None):
+        breakdownPopup.win.destroy()
+    breakdownPopup = ReviewPopup(currentDate, eventData,
                         scheduledData, frequency="weekly")
 
 
