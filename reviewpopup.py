@@ -54,8 +54,8 @@ class ReviewPopup():
 
         # Get the percentage of time the person was not in an engagement during the day
         freeMinutes = 0
-        
-
+        startTime = 0
+        endTime = 0
 
         return (totalMinutes, eventMinutes, taskMinutes, percentFree, totalActivities - lateActivities, lateActivities, 1.0*(totalActivities - lateActivities)/totalActivities, 1.0*lateActivities/totalActivities, lateMinutes, 1.0 * lateMinutes / totalMinutes, mostLateEvent, mostLateEventMinutes)
 

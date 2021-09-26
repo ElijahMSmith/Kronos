@@ -65,6 +65,10 @@ def incDate():
     global currentDate
     currentDate += datetime.timedelta(days=1)
     rerenderTopBar()
+    # Swap out eventData (list of event objects) to load whatever JSON events are at the new currentDate value
+    # toDateString(dateTime) for JSON keys
+    # scheduleEvents()
+    # rerenderCanvas()
 
 
 def decDate():
@@ -80,10 +84,12 @@ def updateEvent(newVersion):
         event = eventData[i]
         if event.uuid == newVersion.uuid:
             eventData[i] = newVersion
+
+            # Save the JSON for the updated event in place of the existing event at the currentDate
+
             scheduleEvents()
             rerenderCanvas()
             return True
-
     return False  # Indicate it's safe to replace prevVersion with newVersion
 
 
@@ -93,14 +99,16 @@ def deleteEvent(previousVersion):
         event = eventData[i]
         if event.uuid == previousVersion.uuid:
             eventData.remove(event)
+
+            # Delete the JSON object of the deleted event
+
             scheduleEvents()
             rerenderCanvas()
             return True
     return False
 
+
 # Call every time an event gets added or removed
-
-
 def scheduleEvents():
     eventData.sort()
     scheduledData.clear()
@@ -126,6 +134,9 @@ def scheduleEvents():
 
 def addNewEvent(event):
     eventData.append(event)
+
+    # Update the JSON object for the currentDate to include this new event
+
     scheduleEvents()
     rerenderCanvas()
 

@@ -3,13 +3,4 @@
 
 
 
-
-- Breakdown statistics:
-    - # on time
-    - # late
-    - % on time
-    - % late
-    - total late minutes
-    - Weekly
-        - Days with the most late events
-        - Days with the most late minutes
+- When the currentDate changes by left/right buttons on dashboard, the eventData array needs to be swapped 
