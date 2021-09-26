@@ -6,7 +6,7 @@ from tkinter.font import Font
 eventViewBg = constants.eventViewBg
 eventViewButtonBg = constants.eventViewButtonBg
 eventViewButtonBgActive = constants.eventViewButtonBgActive
-
+#TEST
 
 class NewEventPopupWindow():
     def __init__(self, appendNewEventCallback):
