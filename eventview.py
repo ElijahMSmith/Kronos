@@ -93,21 +93,21 @@ class PopupWindow():
             invalidFieldsLabel.grid(column=2, row=0, padx=10)
 
     def processUpdate(self):
-        try:
-            self.event = Event(self.entryValues["name"].get(), self.entryValues["description"].get(),
-                               self.entryValues["start"].get(
-            ), self.entryValues["end"].get(),
-                actualStart=self.entryValues["actualStart"].get(
-            ), actualEnd=self.entryValues["actualEnd"].get(),
-                eventType=self.entryValues["eventType"].get(), existingUUID=self.previousEvent.uuid, currentDate=self.currentDate, fromGoogle=self.previousEvent.fromGoogle)
+        # try:
+        self.event = Event(self.entryValues["name"].get(), self.entryValues["description"].get(),
+                           self.entryValues["start"].get(
+        ), self.entryValues["end"].get(),
+            actualStart=self.entryValues["actualStart"].get(
+        ), actualEnd=self.entryValues["actualEnd"].get(),
+            eventType=self.entryValues["eventType"].get(), existingUUID=self.previousEvent.uuid, currentDate=self.currentDate, fromGoogle=self.previousEvent.fromGoogle)
 
-            retVal = self.updateEventCallback(self.event)
-            if retVal:
-                self.previousEvent = self.event
-        except:
-            print("Failed to update: One or more invalid values provided")
-            self.invalidFields = True
-            self.renderActionBar()
+        retVal = self.updateEventCallback(self.event)
+        if retVal:
+            self.previousEvent = self.event
+        # except:
+        #     print("Failed to update: One or more invalid values provided")
+        #     self.invalidFields = True
+        #     self.renderActionBar()
 
     def processDeletion(self):
         retVal = self.deleteEventCallback(self.previousEvent)

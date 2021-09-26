@@ -1,4 +1,3 @@
-from hashlib import new
 from tkinter import *
 from buttonbars import *
 from Event import *

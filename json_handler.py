@@ -12,7 +12,6 @@ def loadDayEvents(date: datetime.datetime):
 
         try:
             loadData = allData[toDateString(date)]['events']
-            print(loadData)
             retData = []
             for obj in loadData:
                 retData.append(
@@ -44,8 +43,10 @@ def updateJSON(event: Event, currentDate):
         eventObjects = data[toDateString(currentDate)]['events']
 
         for obj in eventObjects:
-            if obj["existingUUID"] == export_event.existingUUID:
-                del obj
+            print(obj)
+            print(export_event)
+            if obj["existingUUID"] == export_event["existingUUID"]:
+                eventObjects.remove(obj)
                 eventObjects.append(export_event)
                 break
 
@@ -93,7 +94,7 @@ def delete_event(event, currentDate):
     for obj in eventObjects:
         if obj["existingUUID"] == matchUUID:
             print("found")
-            del obj
+            eventObjects.remove(obj)
             break
     print("post-del", data)
 

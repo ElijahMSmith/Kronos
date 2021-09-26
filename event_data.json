@@ -24,15 +24,92 @@
                 "fromGoogle": false
             },
             {
-                "existingUUID": "Bc8NAqasVw6owBAapZKsZe",
-                "name": "test1",
-                "description": "test",
-                "eventType": "task",
-                "start": "3:00 AM",
-                "end": "4:00 AM",
-                "actualStart": "3:00 AM",
-                "actualEnd": "4:00 AM",
+                "existingUUID": "BNUe9znmQ4dVQr7aksBZyE",
+                "name": "Create presentation for STEM ambassador training and send in advance to Renee",
+                "description": "https://www.google.com/calendar/event?eid=Y2xpNmNkcGlja3NqMGI5bjZzcDZhYjlrNzRwbThiYjE2NHM2NGI5bmM5aWowcGhpNmdvMzJlYjM2OCBlbGlqYWgubWF0dGhldy5zbWl0aEBt",
+                "eventType": "event",
+                "start": "12:00 PM",
+                "end": "3:00 PM",
+                "actualStart": "12:00 PM",
+                "actualEnd": "3:00 PM",
+                "fromGoogle": true
+            },
+            {
+                "existingUUID": "GxtG4s9bAfywTJFVuVzc4g",
+                "name": "Applications",
+                "description": "https://www.google.com/calendar/event?eid=NjhvNjZwOWtjOWg2NGI5azZncWoyYjlrNnBpMzZiOW83MHIzMmI5cDZvcTYyYzMxNzVqM2VwaG42NF8yMDIxMDkyN1QwMDAwMDBaIGVsaWphaC5tYXR0aGV3LnNtaXRoQG0",
+                "eventType": "event",
+                "start": "8:00 PM",
+                "end": "9:00 PM",
+                "actualStart": "8:00 PM",
+                "actualEnd": "9:00 PM",
+                "fromGoogle": true
+            },
+            {
+                "existingUUID": "kixa3MVHm5Uc5GVXHqiaXH",
+                "name": "Knighthacks Ops meeting",
+                "description": "https://www.google.com/calendar/event?eid=YzVqM2ljaG1jOWdqOGJiMzc1aW0yYjlrY2xoMzhiYjFjZ282OGJiNjZrcDY4cGIzY2dyamFjajQ3MF8yMDIxMDkyN1QwMDAwMDBaIGVsaWphaC5tYXR0aGV3LnNtaXRoQG0",
+                "eventType": "event",
+                "start": "8:00 PM",
+                "end": "9:00 PM",
+                "actualStart": "8:00 PM",
+                "actualEnd": "9:00 PM",
+                "fromGoogle": true
+            },
+            {
+                "existingUUID": "ehcRg98xPehHatdTuUrYxR",
+                "name": "Test event update",
+                "description": "Test description",
+                "eventType": "event",
+                "start": "12:30 AM",
+                "end": "1:30 AM",
+                "actualStart": "12:30 AM",
+                "actualEnd": "1:30 AM",
                 "fromGoogle": false
+            },
+            {
+                "existingUUID": "MjieCDouYKYUWDT8GHbjgZ",
+                "name": "Test event",
+                "description": "Test description",
+                "eventType": "event",
+                "start": "12:30 AM",
+                "end": "1:30 AM",
+                "actualStart": "12:30 AM",
+                "actualEnd": "1:30 AM",
+                "fromGoogle": false
+            },
+            {
+                "existingUUID": "HSwrFVGUS4fKtgsWojZevm",
+                "name": "Create presentation for STEM ambassador training and send in advance to Renee",
+                "description": "https://www.google.com/calendar/event?eid=Y2xpNmNkcGlja3NqMGI5bjZzcDZhYjlrNzRwbThiYjE2NHM2NGI5bmM5aWowcGhpNmdvMzJlYjM2OCBlbGlqYWgubWF0dGhldy5zbWl0aEBt",
+                "eventType": "event",
+                "start": "12:00 PM",
+                "end": "3:00 PM",
+                "actualStart": "12:00 PM",
+                "actualEnd": "3:00 PM",
+                "fromGoogle": true
+            },
+            {
+                "existingUUID": "WmBZdoqwP8YMPqxu66qUbH",
+                "name": "Applications",
+                "description": "https://www.google.com/calendar/event?eid=NjhvNjZwOWtjOWg2NGI5azZncWoyYjlrNnBpMzZiOW83MHIzMmI5cDZvcTYyYzMxNzVqM2VwaG42NF8yMDIxMDkyN1QwMDAwMDBaIGVsaWphaC5tYXR0aGV3LnNtaXRoQG0",
+                "eventType": "event",
+                "start": "8:00 PM",
+                "end": "9:00 PM",
+                "actualStart": "8:00 PM",
+                "actualEnd": "9:00 PM",
+                "fromGoogle": true
+            },
+            {
+                "existingUUID": "YFmFXawHCm7LpEruQGPfrf",
+                "name": "Knighthacks Ops meeting",
+                "description": "https://www.google.com/calendar/event?eid=YzVqM2ljaG1jOWdqOGJiMzc1aW0yYjlrY2xoMzhiYjFjZ282OGJiNjZrcDY4cGIzY2dyamFjajQ3MF8yMDIxMDkyN1QwMDAwMDBaIGVsaWphaC5tYXR0aGV3LnNtaXRoQG0",
+                "eventType": "event",
+                "start": "8:00 PM",
+                "end": "9:00 PM",
+                "actualStart": "8:00 PM",
+                "actualEnd": "9:00 PM",
+                "fromGoogle": true
             }
         ]
     },
@@ -50,14 +127,106 @@
                 "fromGoogle": false
             },
             {
-                "existingUUID": "12h3lj1454l2nj3l4n52l3453",
-                "name": "Calc Test",
-                "description": "Integrals",
+                "existingUUID": "bWVEDKe9Bk56GDcAVGvYqk",
+                "name": "Team lead meeting",
+                "description": "https://www.google.com/calendar/event?eid=NmNzMzZjajM2NWltOGI5bDYxaWpjYjlrY2hqM2FiYjI2OWozNmI5bzc0cTY0ZDloNjhyM2NjOW02b18yMDIxMDkyN1QxMzMwMDBaIGVsaWphaC5tYXR0aGV3LnNtaXRoQG0",
                 "eventType": "event",
-                "start": "12:00 PM",
-                "end": "3:30 PM",
-                "actualStart": "12:10 PM",
-                "actualEnd": "1:00 PM",
+                "start": "9:30 AM",
+                "end": "11:00 AM",
+                "actualStart": "9:30 AM",
+                "actualEnd": "11:00 AM",
+                "fromGoogle": true
+            },
+            {
+                "existingUUID": "hBvqodWjuqmHwDe7FvXp3s",
+                "name": "PHY 2049C - Hon Gen Physics 2 w/ calc",
+                "description": "https://www.google.com/calendar/event?eid=NjVpbWFjMW1jY3E2NmI5aDZvcmphYjlrNzVnamViOW82OWdtNmJiNTcxaDY0b2hrNnRpMzZjOWdja18yMDIxMDkyN1QxNDMwMDBaIGVsaWphaC5tYXR0aGV3LnNtaXRoQG0",
+                "eventType": "event",
+                "start": "10:30 AM",
+                "end": "11:20 AM",
+                "actualStart": "10:30 AM",
+                "actualEnd": "11:20 AM",
+                "fromGoogle": true
+            },
+            {
+                "existingUUID": "X7g6AuW3b6hHUYACjkeKn6",
+                "name": "IM match",
+                "description": "https://www.google.com/calendar/event?eid=NmhpNjJjYjM2Y29qYWJiMTZncGowYjlrY2NzajBiOXA2Y3I2OGJiNDZzczM0cDFpNjRyajBwMzI2b18yMDIxMDkyN1QyMzAwMDBaIGVsaWphaC5tYXR0aGV3LnNtaXRoQG0",
+                "eventType": "event",
+                "start": "7:00 PM",
+                "end": "8:00 PM",
+                "actualStart": "7:00 PM",
+                "actualEnd": "8:00 PM",
+                "fromGoogle": true
+            },
+            {
+                "existingUUID": "D4uFWRWpriYWmy4XYEW9rB",
+                "name": "Applications",
+                "description": "https://www.google.com/calendar/event?eid=NjhvNjZwOWtjOWg2NGI5azZncWoyYjlrNnBpMzZiOW83MHIzMmI5cDZvcTYyYzMxNzVqM2VwaG42NF8yMDIxMDkyOFQwMDAwMDBaIGVsaWphaC5tYXR0aGV3LnNtaXRoQG0",
+                "eventType": "event",
+                "start": "8:00 PM",
+                "end": "9:00 PM",
+                "actualStart": "8:00 PM",
+                "actualEnd": "9:00 PM",
+                "fromGoogle": true
+            },
+            {
+                "existingUUID": "E9RGbPvn5A62wguzT5n4q4",
+                "name": "Team lead meeting",
+                "description": "https://www.google.com/calendar/event?eid=NmNzMzZjajM2NWltOGI5bDYxaWpjYjlrY2hqM2FiYjI2OWozNmI5bzc0cTY0ZDloNjhyM2NjOW02b18yMDIxMDkyN1QxMzMwMDBaIGVsaWphaC5tYXR0aGV3LnNtaXRoQG0",
+                "eventType": "event",
+                "start": "9:30 AM",
+                "end": "11:00 AM",
+                "actualStart": "9:30 AM",
+                "actualEnd": "11:00 AM",
+                "fromGoogle": true
+            },
+            {
+                "existingUUID": "ArEHH4GKRCiCAea2o4mBir",
+                "name": "PHY 2049C - Hon Gen Physics 2 w/ calc",
+                "description": "https://www.google.com/calendar/event?eid=NjVpbWFjMW1jY3E2NmI5aDZvcmphYjlrNzVnamViOW82OWdtNmJiNTcxaDY0b2hrNnRpMzZjOWdja18yMDIxMDkyN1QxNDMwMDBaIGVsaWphaC5tYXR0aGV3LnNtaXRoQG0",
+                "eventType": "event",
+                "start": "10:30 AM",
+                "end": "11:20 AM",
+                "actualStart": "10:30 AM",
+                "actualEnd": "11:20 AM",
+                "fromGoogle": true
+            },
+            {
+                "existingUUID": "4CorpuTMW3WYvjtg5wLeb3",
+                "name": "IM match",
+                "description": "https://www.google.com/calendar/event?eid=NmhpNjJjYjM2Y29qYWJiMTZncGowYjlrY2NzajBiOXA2Y3I2OGJiNDZzczM0cDFpNjRyajBwMzI2b18yMDIxMDkyN1QyMzAwMDBaIGVsaWphaC5tYXR0aGV3LnNtaXRoQG0",
+                "eventType": "event",
+                "start": "7:00 PM",
+                "end": "8:00 PM",
+                "actualStart": "7:00 PM",
+                "actualEnd": "8:00 PM",
+                "fromGoogle": true
+            },
+            {
+                "existingUUID": "moD5TJ7NfbmgvmUSqQmqqC",
+                "name": "Applications",
+                "description": "https://www.google.com/calendar/event?eid=NjhvNjZwOWtjOWg2NGI5azZncWoyYjlrNnBpMzZiOW83MHIzMmI5cDZvcTYyYzMxNzVqM2VwaG42NF8yMDIxMDkyOFQwMDAwMDBaIGVsaWphaC5tYXR0aGV3LnNtaXRoQG0",
+                "eventType": "event",
+                "start": "8:00 PM",
+                "end": "9:00 PM",
+                "actualStart": "8:00 PM",
+                "actualEnd": "9:00 PM",
+                "fromGoogle": true
+            }
+        ]
+    },
+    "09/28/2021": {
+        "events": [
+            {
+                "existingUUID": "k3dh78F9J9QMwc3BycXeZs",
+                "name": "Test Not From Google",
+                "description": "desc",
+                "eventType": "task",
+                "start": "11:00 AM",
+                "end": "12:30 PM",
+                "actualStart": "11:00 AM",
+                "actualEnd": "12:30 PM",
                 "fromGoogle": false
             }
         ]
